@@ -46,7 +46,7 @@
         
         NSString *name = [playerInfo objectForKey:@"name"];
         UILabel *nameLabel = [[UILabel alloc] init];
-        [nameLabel setFont:[UIFont fontWithName:@"Times New Roman" size:cellHeight*0.2]];
+        [nameLabel setFont:[UIFont fontWithName:@"Arial" size:cellHeight*0.2]];
         [nameLabel setFrame:CGRectMake(cellWidth*0.35, 0, cellWidth*0.65, cellHeight*0.5)];
         nameLabel.text = name;
         nameLabel.textColor = [UIColor whiteColor];
@@ -56,7 +56,7 @@
         
         NSNumber *score = [playerInfo objectForKey:@"score"];
         UILabel *scoreLabel = [[UILabel alloc] init];
-        [scoreLabel setFont:[UIFont fontWithName:@"Helvetica Neue" size:cellHeight*0.2]];
+        [scoreLabel setFont:[UIFont fontWithName:@"Arial" size:cellHeight*0.2]];
         [scoreLabel setFrame:CGRectMake(cellWidth*0.35, cellHeight*0.5, cellWidth*0.65, cellHeight*0.5)];
         scoreLabel.text = [NSString stringWithFormat:@"Score: %@", [score stringValue]];
         scoreLabel.textColor = [UIColor whiteColor];
@@ -67,7 +67,7 @@
         UITextField *rankLabel = [[UITextField alloc] init];
         [rankLabel setFrame:CGRectMake(0, 0, cellWidth*0.15, cellHeight)];
         
-        [rankLabel setFont:[UIFont fontWithName:@"Times New Roman" size:cellHeight*0.7]];
+        [rankLabel setFont:[UIFont fontWithName:@"Arial" size:cellHeight*0.7]];
         rankLabel.text = [rank stringValue];
         rankLabel.layer.shadowOpacity = 1.0;
         rankLabel.layer.shadowRadius = 1.0;

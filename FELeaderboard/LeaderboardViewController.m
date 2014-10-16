@@ -30,7 +30,7 @@
         self.titleField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, width, height*0.2)];
         self.titleField.text = @"Top Scores";
         self.titleField.textAlignment = NSTextAlignmentCenter;
-        self.titleField.font = [UIFont fontWithName:@"Times New Roman" size: 40];
+        self.titleField.font = [UIFont fontWithName:@"Arial" size: 40];
         self.titleField.textColor = [UIColor whiteColor];
         self.titleField.layer.shadowColor = [UIColor blackColor].CGColor;
         self.titleField.layer.shadowOpacity = 1.0;
