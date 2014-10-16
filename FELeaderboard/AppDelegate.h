@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "LeaderboardViewController.h"
+
+@class JSONDataManager;
+@class LeaderboardViewController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) LeaderboardViewController *leaderboardViewController;
 
 @end

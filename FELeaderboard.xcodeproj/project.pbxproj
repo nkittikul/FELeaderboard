@@ -19,6 +19,8 @@
 		9399A1C919E5F4FB00DB1E13 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9399A1B119E5F4FB00DB1E13 /* UIKit.framework */; };
 		9399A1D119E5F4FB00DB1E13 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9399A1CF19E5F4FB00DB1E13 /* InfoPlist.strings */; };
 		9399A1D319E5F4FB00DB1E13 /* FELeaderboardTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9399A1D219E5F4FB00DB1E13 /* FELeaderboardTests.m */; };
+		9399A1DE19E8F04900DB1E13 /* LeaderboardViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9399A1DD19E8F04900DB1E13 /* LeaderboardViewController.m */; };
+		9399A1E419EE08E100DB1E13 /* LeaderBoardCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9399A1E319EE08E100DB1E13 /* LeaderBoardCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +50,10 @@
 		9399A1CE19E5F4FB00DB1E13 /* FELeaderboardTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FELeaderboardTests-Info.plist"; sourceTree = "<group>"; };
 		9399A1D019E5F4FB00DB1E13 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		9399A1D219E5F4FB00DB1E13 /* FELeaderboardTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FELeaderboardTests.m; sourceTree = "<group>"; };
+		9399A1DC19E8F04900DB1E13 /* LeaderboardViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderboardViewController.h; sourceTree = "<group>"; };
+		9399A1DD19E8F04900DB1E13 /* LeaderboardViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderboardViewController.m; sourceTree = "<group>"; };
+		9399A1E219EE08E100DB1E13 /* LeaderBoardCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LeaderBoardCell.h; sourceTree = "<group>"; };
+		9399A1E319EE08E100DB1E13 /* LeaderBoardCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LeaderBoardCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +117,10 @@
 				9399A1BD19E5F4FB00DB1E13 /* AppDelegate.m */,
 				9399A1BF19E5F4FB00DB1E13 /* Images.xcassets */,
 				9399A1B419E5F4FB00DB1E13 /* Supporting Files */,
+				9399A1DC19E8F04900DB1E13 /* LeaderboardViewController.h */,
+				9399A1DD19E8F04900DB1E13 /* LeaderboardViewController.m */,
+				9399A1E219EE08E100DB1E13 /* LeaderBoardCell.h */,
+				9399A1E319EE08E100DB1E13 /* LeaderBoardCell.m */,
 			);
 			path = FELeaderboard;
 			sourceTree = "<group>";
@@ -239,8 +249,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9399A1DE19E8F04900DB1E13 /* LeaderboardViewController.m in Sources */,
 				9399A1BE19E5F4FB00DB1E13 /* AppDelegate.m in Sources */,
 				9399A1BA19E5F4FB00DB1E13 /* main.m in Sources */,
+				9399A1E419EE08E100DB1E13 /* LeaderBoardCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
