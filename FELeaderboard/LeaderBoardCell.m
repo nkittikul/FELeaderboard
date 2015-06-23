@@ -11,13 +11,12 @@
 
 
 @interface LeaderBoardCell ()
-@property (nonatomic, strong) UIImageView *playerImageView;
-@property (nonatomic, retain) NSMutableData *data;
+@property (nonatomic, strong) NSMutableData *data;
 @end
 
 @implementation LeaderBoardCell
 
-- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier player:(NSDictionary *)playerInfo
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if (self) {
@@ -32,57 +31,48 @@
         float cellWidth = self.frame.size.width;
         [self setSeparatorInset:UIEdgeInsetsZero];
         
-        NSString *imageURL = [playerInfo objectForKey:@"image_url"];
-        NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageURL]];
-        NSURLConnection *connection = [[NSURLConnection alloc]
-                                       initWithRequest:request
-                                       delegate:self
-                                       startImmediately:NO];
-        [connection scheduleInRunLoop:[NSRunLoop currentRunLoop]
-                              forMode:NSRunLoopCommonModes];
-        [connection start];
         self.playerImageView = [[UIImageView alloc] initWithImage:nil];
         [self.playerImageView setFrame:CGRectMake(cellWidth*0.15, cellHeight*0.1, cellWidth*0.2, cellHeight*0.8)];
         
-        NSString *name = [playerInfo objectForKey:@"name"];
-        UILabel *nameLabel = [[UILabel alloc] init];
-        [nameLabel setFont:[UIFont fontWithName:@"Arial" size:cellHeight*0.2]];
-        [nameLabel setFrame:CGRectMake(cellWidth*0.35, 0, cellWidth*0.65, cellHeight*0.5)];
-        nameLabel.text = name;
-        nameLabel.textColor = [UIColor whiteColor];
-        nameLabel.textAlignment = NSTextAlignmentCenter;
-        nameLabel.adjustsFontSizeToFitWidth = YES;
+        self.nameLabel = [[UILabel alloc] init];
+        [self.nameLabel setFont:[UIFont fontWithName:@"Arial" size:cellHeight*0.2]];
+        [self.nameLabel setFrame:CGRectMake(cellWidth*0.35, 0, cellWidth*0.65, cellHeight*0.5)];
+        self.nameLabel.textColor = [UIColor whiteColor];
+        self.nameLabel.textAlignment = NSTextAlignmentCenter;
+        self.nameLabel.adjustsFontSizeToFitWidth = YES;
         
+        self.scoreLabel = [[UILabel alloc] init];
+        [self.scoreLabel setFont:[UIFont fontWithName:@"Arial" size:cellHeight*0.2]];
+        [self.scoreLabel setFrame:CGRectMake(cellWidth*0.35, cellHeight*0.5, cellWidth*0.65, cellHeight*0.5)];
+        self.scoreLabel.textColor = [UIColor whiteColor];
+        self.scoreLabel.textAlignment = NSTextAlignmentCenter;
+        self.scoreLabel.adjustsFontSizeToFitWidth = YES;
+
+        self.rankLabel = [[UILabel alloc] init];
+        [self.rankLabel setFrame:CGRectMake(0, 0, cellWidth*0.15, cellHeight)];
+        [self.rankLabel setFont:[UIFont fontWithName:@"Arial" size:cellHeight*0.7]];
+        self.rankLabel.layer.shadowOpacity = 1.0;
+        self.rankLabel.layer.shadowRadius = 1.0;
+        self.rankLabel.layer.shadowColor = [UIColor blackColor].CGColor;
+        self.rankLabel.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+        self.rankLabel.textColor = [UIColor whiteColor];
+        self.rankLabel.textAlignment = NSTextAlignmentCenter;
+        self.rankLabel.adjustsFontSizeToFitWidth = YES;
+
         
-        NSNumber *score = [playerInfo objectForKey:@"score"];
-        UILabel *scoreLabel = [[UILabel alloc] init];
-        [scoreLabel setFont:[UIFont fontWithName:@"Arial" size:cellHeight*0.2]];
-        [scoreLabel setFrame:CGRectMake(cellWidth*0.35, cellHeight*0.5, cellWidth*0.65, cellHeight*0.5)];
-        scoreLabel.text = [NSString stringWithFormat:@"Score: %@", [score stringValue]];
-        scoreLabel.textColor = [UIColor whiteColor];
-        scoreLabel.textAlignment = NSTextAlignmentCenter;
-        scoreLabel.adjustsFontSizeToFitWidth = YES;
-        
-        NSNumber *rank = [playerInfo objectForKey:@"rank"];
-        UITextField *rankLabel = [[UITextField alloc] init];
-        [rankLabel setFrame:CGRectMake(0, 0, cellWidth*0.15, cellHeight)];
-        
-        [rankLabel setFont:[UIFont fontWithName:@"Arial" size:cellHeight*0.7]];
-        rankLabel.text = [rank stringValue];
-        rankLabel.layer.shadowOpacity = 1.0;
-        rankLabel.layer.shadowRadius = 1.0;
-        rankLabel.layer.shadowColor = [UIColor blackColor].CGColor;
-        rankLabel.layer.shadowOffset = CGSizeMake(0.0, 2.0);
-        rankLabel.textColor = [UIColor whiteColor];
-        rankLabel.textAlignment = NSTextAlignmentCenter;
-        rankLabel.adjustsFontSizeToFitWidth = YES;
-        
-        [self addSubview:self.playerImageView];
-        [self addSubview:nameLabel];
-        [self addSubview:scoreLabel];
-        [self addSubview:rankLabel];
     }
     return self;
+}
+
+- (void)getPlayerImageFromRequest:(NSURLRequest *)request
+{
+    NSURLConnection *connection = [[NSURLConnection alloc]
+                                   initWithRequest:request
+                                   delegate:self
+                                   startImmediately:NO];
+    [connection scheduleInRunLoop:[NSRunLoop currentRunLoop]
+                          forMode:NSRunLoopCommonModes];
+    [connection start];
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data

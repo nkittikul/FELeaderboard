@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSArray *leaders;
 @property (nonatomic, strong) NSArray *playerPhotos;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UITextField *titleField;
+@property (nonatomic, strong) UILabel *titleField;
 
 @end
 
@@ -27,7 +27,7 @@
         float height = self.view.frame.size.height;
         self.view.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:0.2 alpha:1];
         
-        self.titleField = [[UITextField alloc] initWithFrame:CGRectMake(0, 0, width, height*0.2)];
+        self.titleField = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height*0.2)];
         self.titleField.text = @"Top Scores";
         self.titleField.textAlignment = NSTextAlignmentCenter;
         self.titleField.font = [UIFont fontWithName:@"Arial" size: 40];
@@ -94,13 +94,33 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *identifier = [NSString stringWithFormat:@"%d",indexPath.row];
-    LeaderBoardCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    LeaderBoardCell *cell = [tableView dequeueReusableCellWithIdentifier:@"LeaderboardCell"];
+    NSDictionary *playerInfo = [self.leaders objectAtIndex:indexPath.row];
     
     if (cell == nil){
-        cell = [[LeaderBoardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:identifier player:[self.leaders objectAtIndex:indexPath.row]];
-    }    
-        return cell;
+        cell = [[LeaderBoardCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"LeaderboardCell"];
+    }
+
+    NSString *imageURL = [playerInfo objectForKey:@"image_url"];
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:imageURL]];
+    [cell getPlayerImageFromRequest:request];
+    
+    NSString *name = [playerInfo objectForKey:@"name"];
+    cell.nameLabel.text = name;
+    
+    
+    NSNumber *score = [playerInfo objectForKey:@"score"];
+    cell.scoreLabel.text = [NSString stringWithFormat:@"Score: %@", [score stringValue]];
+
+    NSNumber *rank = [playerInfo objectForKey:@"rank"];
+    cell.rankLabel.text = [rank stringValue];
+    
+    [cell addSubview:cell.playerImageView];
+    [cell addSubview:cell.nameLabel];
+    [cell addSubview:cell.scoreLabel];
+    [cell addSubview:cell.rankLabel];
+    
+    return cell;
 }
 
 @end
