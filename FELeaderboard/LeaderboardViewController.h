@@ -11,7 +11,6 @@
 @class AppDelegate;
 
 @interface LeaderboardViewController : UIViewController <UITableViewDataSource, UITableViewDelegate>
-@property (strong, nonatomic) AppDelegate *appDelegate;
 
 
 @end

@@ -24,8 +24,8 @@
         self.layer.cornerRadius = 8;
         self.layer.masksToBounds = YES;
         self.data = [[NSMutableData alloc] init];
-        int colorHelper = [reuseIdentifier intValue] % 1;
-        self.backgroundColor = [UIColor colorWithRed:0 green:0.1*colorHelper+0.25 blue:0.1*colorHelper+0.25 alpha:1];
+
+        self.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:0.2 alpha:1];
         self.userInteractionEnabled = NO;
         float cellHeight = self.frame.size.height;
         float cellWidth = self.frame.size.width;

@@ -14,7 +14,6 @@
 @property (nonatomic, strong) NSArray *leaders;
 @property (nonatomic, strong) NSArray *playerPhotos;
 @property (nonatomic, strong) UITableView *tableView;
-@property (nonatomic, strong) UILabel *titleField;
 
 @end
 
@@ -22,40 +21,7 @@
 
 - (id)init
 {
-    if (self) {
-        float width = self.view.frame.size.width;
-        float height = self.view.frame.size.height;
-        self.view.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:0.2 alpha:1];
-        
-        self.titleField = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height*0.2)];
-        self.titleField.text = @"Top Scores";
-        self.titleField.textAlignment = NSTextAlignmentCenter;
-        self.titleField.font = [UIFont fontWithName:@"Arial" size: 40];
-        self.titleField.textColor = [UIColor whiteColor];
-        self.titleField.layer.shadowColor = [UIColor blackColor].CGColor;
-        self.titleField.layer.shadowOpacity = 1.0;
-        self.titleField.layer.shadowRadius = 1.0;
-        self.titleField.layer.shadowOffset = CGSizeMake(0.0, 2.0);
-        
-        self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, height*0.2, width, height*0.8)];
-        self.tableView.delegate = self;
-        self.tableView.dataSource = self;
-        self.tableView.rowHeight = 100;
-        self.tableView.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:0.2 alpha:1];
-        
-        [self.view addSubview:self.titleField];
-        [self.view addSubview:self.tableView];
-        
-        NSURL *url = [[NSURL alloc] initWithString:@"https://keith.fanfareentertainment.com/api/v4/games/matching.json"];
-        
-        [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-            if (error){
-                NSLog(@"Error retrieving data: %@", [error localizedDescription]);
-            } else {
-                [self getLeadersFromJSONData:data];
-            }
-        }];
-
+    if (self = [super init]) {
     }
     return self;
 }
@@ -63,6 +29,40 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    float width = self.view.bounds.size.width;
+    float height = self.view.bounds.size.height;
+    self.view.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:0.2 alpha:1];
+    
+    UILabel *titleField = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height*0.2)];
+    titleField.text = @"Top Scores";
+    titleField.textAlignment = NSTextAlignmentCenter;
+    titleField.font = [UIFont fontWithName:@"Arial" size: 40];
+    titleField.textColor = [UIColor whiteColor];
+    titleField.layer.shadowColor = [UIColor blackColor].CGColor;
+    titleField.layer.shadowOpacity = 1.0;
+    titleField.layer.shadowRadius = 1.0;
+    titleField.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+    
+    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, height*0.2, width, height*0.8)];
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+    self.tableView.rowHeight = 100;
+    self.tableView.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:0.2 alpha:1];
+    
+    [self.view addSubview:titleField];
+    [self.view addSubview:self.tableView];
+    
+    
+    NSURL *url = [[NSURL alloc] initWithString:@"https://keith.fanfareentertainment.com/api/v4/games/matching.json"];
+    
+    [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (error){
+            NSLog(@"Error retrieving data: %@", [error localizedDescription]);
+        } else {
+            [self getLeadersFromJSONData:data];
+        }
+    }];
+
 }
 
 - (void)getLeadersFromJSONData:(NSData *)data

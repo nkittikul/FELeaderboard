@@ -16,7 +16,6 @@
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor = [UIColor whiteColor];
     self.leaderboardViewController = [[LeaderboardViewController alloc] init];
-    self.leaderboardViewController.appDelegate = self;
     self.window.rootViewController = self.leaderboardViewController;
     [self.window makeKeyAndVisible];
     return YES;

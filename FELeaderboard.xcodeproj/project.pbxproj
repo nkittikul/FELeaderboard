@@ -451,6 +451,7 @@
 				9399A1D819E5F4FB00DB1E13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9399A1D919E5F4FB00DB1E13 /* Build configuration list for PBXNativeTarget "FELeaderboardTests" */ = {
 			isa = XCConfigurationList;
@@ -459,6 +460,7 @@
 				9399A1DB19E5F4FB00DB1E13 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
