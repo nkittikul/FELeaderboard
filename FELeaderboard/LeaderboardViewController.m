@@ -12,7 +12,6 @@
 
 @interface LeaderboardViewController ()
 @property (nonatomic, strong) NSArray *leaders;
-@property (nonatomic, strong) NSArray *playerPhotos;
 @property (nonatomic, strong) UITableView *tableView;
 
 @end
@@ -22,13 +21,24 @@
 - (id)init
 {
     if (self = [super init]) {
+        self.leaders = nil;
+        NSURL *url = [[NSURL alloc] initWithString:@"https://keith.fanfareentertainment.com/api/v4/games/matching.json"];
+        
+        [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+            if (error){
+                NSLog(@"Error retrieving data: %@", [error localizedDescription]);
+            } else {
+                [self getLeadersFromJSONData:data];
+            }
+        }];
+
     }
     return self;
 }
 
-- (void)viewDidLoad
+- (void)viewWillAppear:(BOOL)animated
 {
-    [super viewDidLoad];
+    [super viewWillAppear:YES];
     float width = self.view.bounds.size.width;
     float height = self.view.bounds.size.height;
     self.view.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:0.2 alpha:1];
@@ -51,18 +61,6 @@
     
     [self.view addSubview:titleField];
     [self.view addSubview:self.tableView];
-    
-    
-    NSURL *url = [[NSURL alloc] initWithString:@"https://keith.fanfareentertainment.com/api/v4/games/matching.json"];
-    
-    [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-        if (error){
-            NSLog(@"Error retrieving data: %@", [error localizedDescription]);
-        } else {
-            [self getLeadersFromJSONData:data];
-        }
-    }];
-
 }
 
 - (void)getLeadersFromJSONData:(NSData *)data
