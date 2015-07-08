@@ -13,6 +13,7 @@
 @interface LeaderboardViewController ()
 @property (nonatomic, strong) NSArray *leaders;
 @property (nonatomic, strong) UITableView *tableView;
+@property (nonatomic, strong) UILabel *titleLabel;
 
 @end
 
@@ -21,46 +22,55 @@
 - (id)init
 {
     if (self = [super init]) {
-        self.leaders = nil;
-        NSURL *url = [[NSURL alloc] initWithString:@"https://keith.fanfareentertainment.com/api/v4/games/matching.json"];
-        
-        [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
-            if (error){
-                NSLog(@"Error retrieving data: %@", [error localizedDescription]);
-            } else {
-                [self getLeadersFromJSONData:data];
-            }
-        }];
-
+        _leaders = [NSArray array];
     }
     return self;
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void)viewDidLoad
 {
-    [super viewWillAppear:YES];
-    float width = self.view.bounds.size.width;
-    float height = self.view.bounds.size.height;
+    NSURL *url = [[NSURL alloc] initWithString:@"https://keith.fanfareentertainment.com/api/v4/games/matching.json"];
+    
+    [NSURLConnection sendAsynchronousRequest:[[NSURLRequest alloc] initWithURL:url] queue:[[NSOperationQueue alloc] init] completionHandler:^(NSURLResponse *response, NSData *data, NSError *error) {
+        if (error){
+            NSLog(@"Error retrieving data: %@", [error localizedDescription]);
+        } else {
+            [self getLeadersFromJSONData:data];
+        }
+    }];
+    
     self.view.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:0.2 alpha:1];
     
-    UILabel *titleField = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, width, height*0.2)];
-    titleField.text = @"Top Scores";
-    titleField.textAlignment = NSTextAlignmentCenter;
-    titleField.font = [UIFont fontWithName:@"Arial" size: 40];
-    titleField.textColor = [UIColor whiteColor];
-    titleField.layer.shadowColor = [UIColor blackColor].CGColor;
-    titleField.layer.shadowOpacity = 1.0;
-    titleField.layer.shadowRadius = 1.0;
-    titleField.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+    self.titleLabel = [[UILabel alloc] init];
+    self.titleLabel.text = @"Top Scores";
+    self.titleLabel.textAlignment = NSTextAlignmentCenter;
+    self.titleLabel.font = [UIFont fontWithName:@"Arial" size: 40];
+    self.titleLabel.textColor = [UIColor whiteColor];
+    self.titleLabel.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.titleLabel.layer.shadowOpacity = 1.0;
+    self.titleLabel.layer.shadowRadius = 1.0;
+    self.titleLabel.layer.shadowOffset = CGSizeMake(0.0, 2.0);
+    [self.titleLabel setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
-    self.tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, height*0.2, width, height*0.8)];
+    self.tableView = [[UITableView alloc] init];
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.rowHeight = 100;
     self.tableView.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:0.2 alpha:1];
+    [self.tableView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
-    [self.view addSubview:titleField];
+    [self.view addSubview:self.titleLabel];
     [self.view addSubview:self.tableView];
+    
+}
+
+-(void)viewWillLayoutSubviews
+{
+    float width = self.view.bounds.size.width;
+    float height = self.view.bounds.size.height;
+    self.titleLabel.frame = CGRectMake(0, 0, width, height*0.2);
+    self.tableView.frame = CGRectMake(0, height*0.2, width, height*0.8);
+
 }
 
 - (void)getLeadersFromJSONData:(NSData *)data
